@@ -41,7 +41,7 @@ for (var i = 0; i < 8; i++) {
         'guests': randomValue(1, 10),
         'checkin': checkins[getRandomArrayIndex(checkins)],
         'checkout': checkouts[getRandomArrayIndex(checkouts)],
-        'features': [featuresList[getRandomArrayIndex(featuresList)]], // массив строк случайной длины из ниже предложенных
+        'features': featuresList[getRandomArrayIndex(featuresList)],
         'description': '',
         'photos': []
       },
@@ -50,16 +50,29 @@ for (var i = 0; i < 8; i++) {
   titles.splice(titleIndex, 1);
   advertismentList.push(advertisment);
 }
-var mapNoFaded = document.querySelector('.map');
-mapNoFaded.classList.remove('map--faded');
-var template = document.querySelector('template').content;
-var pinTemplate = template.querySelector('button');
-var fragment = document.createDocumentFragment();
-for (var i = 0; i < 8; i++) {
-  var pinElement = pinTemplate.cloneNode(true);
-  var data = advertismentList[i];
-  pinElement.style = 'left: ' + data.location.x + 'px; ' + 'top: ' + data.location.y + 'px;';
-  fragment.appendChild(pinElement);
-}
-var mapPins = document.querySelector('.map__pins');
-mapPins.appendChild(fragment);
+var showMap = function () {
+  var mapNoFaded = document.querySelector('.map');
+  mapNoFaded.classList.remove('map--faded');
+};
+
+var getPin = function (data) {
+  var buttonWithImageNode = document.querySelector('template').content.querySelector('.map__pin').cloneNode(true);
+  var buttonImage = buttonWithImageNode.querySelector('img');
+  buttonWithImageNode.style.left = data.location.x + 'px';
+  buttonWithImageNode.style.top = data.location.y + 'px';
+  buttonImage.src = data.author.avatar;
+  return buttonWithImageNode;
+};
+
+var addButtons = function () {
+  var fragment = document.createDocumentFragment();
+  for (var j = 0; j < 8; j++) {
+    var buttonNode = getPin(advertismentList[j]);
+    fragment.appendChild(buttonNode);
+  }
+  var mapPins = document.querySelector('.map__pins');
+  mapPins.appendChild(fragment);
+};
+
+showMap();
+addButtons();
