@@ -76,3 +76,16 @@ var addButtons = function () {
 
 showMap();
 addButtons();
+
+var getCard = function (data) {
+  var wholeCard = document.querySelector('template').content.querySelector('.map__card').cloneNode(true);
+  var titleCard = wholeCard.querySelector('h3');
+  var addressCard = wholeCard.querySelector('p').querySelector('small');
+  var priceCard = wholeCard.querySelector('.popup__price');
+  var roomAndPrice = wholeCard.querySelector();
+  titleCard.textContent = data.offer.title;
+  addressCard.textContent = data.offer.address;
+  priceCard.textContent = data.offer.price + '&#x20bd;/ночь';
+  roomAndGuestCard.textContent =
+  return wholeCard;
+};
