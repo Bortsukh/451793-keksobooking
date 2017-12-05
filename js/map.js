@@ -25,7 +25,7 @@ var randomValue = function (min, max) {
 };
 for (var i = 0; i < 8; i++) {
   var titleIndex = getRandomArrayIndex(titles);
-  var location = {'x': randomValue(300, 900), 'y': randomValue(100, 500)};
+  var locationIcon = {'x': randomValue(300, 900), 'y': randomValue(100, 500)};
   var advertisment =
     {
       'author': {
@@ -34,7 +34,7 @@ for (var i = 0; i < 8; i++) {
 
       'offer': {
         'title': titles[titleIndex],
-        'address': location.x + ', ' + location.y,
+        'address': locationIcon.x + ', ' + locationIcon.y,
         'price': randomValue(1000, 1000000),
         'type': types[getRandomArrayIndex(types)],
         'rooms': randomValue(1, 5),
@@ -45,7 +45,7 @@ for (var i = 0; i < 8; i++) {
         'description': '',
         'photos': []
       },
-      'location': location
+      'location': locationIcon
     };
   titles.splice(titleIndex, 1);
   advertismentList.push(advertisment);
