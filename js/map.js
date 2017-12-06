@@ -1,6 +1,15 @@
 'use strict';
 var advertismentList = [];
-
+var minPrice = 1000;
+var maxPrice = 1000000;
+var minRooms = 1;
+var maxRooms = 5;
+var minGuests = 1;
+var maxGuests = 10;
+var randomMinX = 300;
+var randomMaxX = 900;
+var randomMinY = 100;
+var randomMaxY = 500;
 var titles = [
   'Большая уютная квартира',
   'Маленькая неуютная квартира',
@@ -26,33 +35,38 @@ var getRandomArray = function (arr) {
   var quantityElements = randomValue(0, arr.length - 1);
   return arr.slice(0, quantityElements);
 };
-for (var i = 0; i < 8; i++) { // const and func
-  var titleIndex = getRandomArrayIndex(titles);
-  var locationIcon = {'x': randomValue(300, 900), 'y': randomValue(100, 500)};// const
-  var advertisment =
-    {
-      'author': {
-        'avatar': 'img/avatars/user0' + (i + 1) + '.png'
-      },
+var getData = function () {
+  var advertismentData = [];
+  for (var i = 0; i < 8; i++) { // const and func
+    var titleIndex = getRandomArrayIndex(titles);
+    var locationIcon = {'x': randomValue(randomMinX, randomMaxX), 'y': randomValue(randomMinY, randomMaxY)};
+    var advertisment =
+      {
+        'author': {
+          'avatar': 'img/avatars/user0' + (i + 1) + '.png'
+        },
 
-      'offer': {
-        'title': titles[titleIndex],
-        'address': locationIcon.x + ', ' + locationIcon.y,
-        'price': randomValue(1000, 1000000), // const
-        'type': types[getRandomArrayIndex(types)],
-        'rooms': randomValue(1, 5), // const
-        'guests': randomValue(1, 10), // const
-        'checkin': checkins[getRandomArrayIndex(checkins)],
-        'checkout': checkouts[getRandomArrayIndex(checkouts)],
-        'features': getRandomArray(featuresList),
-        'description': '',
-        'photos': []
-      },
-      'location': locationIcon
-    };
-  titles.splice(titleIndex, 1);
-  advertismentList.push(advertisment);
-}
+        'offer': {
+          'title': titles[titleIndex],
+          'address': locationIcon.x + ', ' + locationIcon.y,
+          'price': randomValue(minPrice, maxPrice),
+          'type': types[getRandomArrayIndex(types)],
+          'rooms': randomValue(minRooms, maxRooms),
+          'guests': randomValue(minGuests, maxGuests),
+          'checkin': checkins[getRandomArrayIndex(checkins)],
+          'checkout': checkouts[getRandomArrayIndex(checkouts)],
+          'features': getRandomArray(featuresList),
+          'description': '',
+          'photos': []
+        },
+        'location': locationIcon
+      };
+    titles.splice(titleIndex, 1);
+    advertismentData.push(advertisment);
+  }
+  return advertismentData;
+};
+advertismentList = getData();
 var showMap = function () {
   var mapNoFaded = document.querySelector('.map');
   mapNoFaded.classList.remove('map--faded');
@@ -103,8 +117,8 @@ var getCard = function (data) {
   addressCard.textContent = data.offer.address;
   priceCard.textContent = data.offer.price + '&#x20bd;/ночь';
   buildCard.textContent = typesText[data.offer.type];
-  roomAndGuestCard.textContent = data.offer.rooms + ' для' + data.offer.guests + 'гостей';
-  checkinAndCheckoutCard.textContent = 'Заезд после' + data.offer.checkin + ', выезд до ' + data.offer.checkout;
+  roomAndGuestCard.textContent = data.offer.rooms + ' для ' + data.offer.guests + ' гостей';
+  checkinAndCheckoutCard.textContent = 'Заезд после ' + data.offer.checkin + ', выезд до ' + data.offer.checkout;
   featuresCard.innerHTML = generateFeaturesList(data.offer.features);
   descriptionCard.textContent = data.offer.description;
   avatarCard.src = data.author.avatar;
