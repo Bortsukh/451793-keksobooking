@@ -1,8 +1,6 @@
 'use strict';
 var advertismentList = [];
-// var template = document.querySelector('template').content;
-// var templateAvatar = template.querySelector('.popup__avatar').cloneNode();
-// var templatePrice = template.querySelector('.popup__price');
+
 var titles = [
   'Большая уютная квартира',
   'Маленькая неуютная квартира',
@@ -14,6 +12,7 @@ var titles = [
   'Неуютное бунгало по колено в воде'
 ];
 var types = ['flat', 'house', 'bungalo'];
+var typesText = {'flat': 'Квартира', 'house': 'Дом', 'bungalo': 'Бунгало'};
 var checkins = ['12:00', '13:00', '14:00'];
 var checkouts = ['12:00', '13:00', '14:00'];
 var featuresList = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
@@ -23,9 +22,13 @@ var getRandomArrayIndex = function (arr) {
 var randomValue = function (min, max) {
   return Math.floor(Math.random() * (max + 1 - min)) + min;
 };
-for (var i = 0; i < 8; i++) {
+var getRandomArray = function (arr) {
+  var quantityElements = randomValue(0, arr.length - 1);
+  return arr.slice(0, quantityElements);
+};
+for (var i = 0; i < 8; i++) { // const and func
   var titleIndex = getRandomArrayIndex(titles);
-  var locationIcon = {'x': randomValue(300, 900), 'y': randomValue(100, 500)};
+  var locationIcon = {'x': randomValue(300, 900), 'y': randomValue(100, 500)};// const
   var advertisment =
     {
       'author': {
@@ -35,13 +38,13 @@ for (var i = 0; i < 8; i++) {
       'offer': {
         'title': titles[titleIndex],
         'address': locationIcon.x + ', ' + locationIcon.y,
-        'price': randomValue(1000, 1000000),
+        'price': randomValue(1000, 1000000), // const
         'type': types[getRandomArrayIndex(types)],
-        'rooms': randomValue(1, 5),
-        'guests': randomValue(1, 10),
+        'rooms': randomValue(1, 5), // const
+        'guests': randomValue(1, 10), // const
         'checkin': checkins[getRandomArrayIndex(checkins)],
         'checkout': checkouts[getRandomArrayIndex(checkouts)],
-        'features': featuresList[getRandomArrayIndex(featuresList)],
+        'features': getRandomArray(featuresList),
         'description': '',
         'photos': []
       },
@@ -66,7 +69,7 @@ var getPin = function (data) {
 
 var addButtons = function () {
   var fragment = document.createDocumentFragment();
-  for (var j = 0; j < 8; j++) {
+  for (var j = 0; j < 8; j++) { // const
     var buttonNode = getPin(advertismentList[j]);
     fragment.appendChild(buttonNode);
   }
@@ -77,15 +80,41 @@ var addButtons = function () {
 showMap();
 addButtons();
 
+var generateFeaturesList = function (featuresArray) {
+  var featuresString = '';
+  for (var j = 0; j < featuresArray.length; j++) {
+    featuresString += '<li class="feature feature--' + featuresArray[j] + '"></li>';
+  }
+  return featuresString;
+};
 var getCard = function (data) {
-  var wholeCard = document.querySelector('template').content.querySelector('.map__card').cloneNode(true);
+  var template = document.querySelector('template').content;
+  var wholeCard = template.querySelector('.map__card').cloneNode(true);
   var titleCard = wholeCard.querySelector('h3');
-  var addressCard = wholeCard.querySelector('p').querySelector('small');
+  var addressCard = wholeCard.querySelector('p small');
   var priceCard = wholeCard.querySelector('.popup__price');
-  var roomAndPrice = wholeCard.querySelector();
+  var buildCard = wholeCard.querySelector('h4');
+  var roomAndGuestCard = wholeCard.querySelector('h4 + p');
+  var checkinAndCheckoutCard = wholeCard.querySelector('h4 + p + p');
+  var featuresCard = wholeCard.querySelector('.popup__features');
+  var descriptionCard = wholeCard.querySelector('ul + p');
+  var avatarCard = wholeCard.querySelector('.popup__avatar');
   titleCard.textContent = data.offer.title;
   addressCard.textContent = data.offer.address;
   priceCard.textContent = data.offer.price + '&#x20bd;/ночь';
-  roomAndGuestCard.textContent =
+  buildCard.textContent = typesText[data.offer.type];
+  roomAndGuestCard.textContent = data.offer.rooms + ' для' + data.offer.guests + 'гостей';
+  checkinAndCheckoutCard.textContent = 'Заезд после' + data.offer.checkin + ', выезд до ' + data.offer.checkout;
+  featuresCard.innerHTML = generateFeaturesList(data.offer.features);
+  descriptionCard.textContent = data.offer.description;
+  avatarCard.src = data.author.avatar;
   return wholeCard;
 };
+var addCard = function (data) {
+  var cardNode = getCard(data);
+  var mapCard = document.querySelector('.map');
+  var beforeElement = document.querySelector('.map__filters-container');
+  mapCard.insertBefore(cardNode, beforeElement);
+};
+
+addCard(advertismentList[0]);
