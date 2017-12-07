@@ -1,16 +1,17 @@
 'use strict';
 var advertismentList = [];
-var minPrice = 1000;
-var maxPrice = 1000000;
-var minRooms = 1;
-var maxRooms = 5;
-var minGuests = 1;
-var maxGuests = 10;
-var randomMinX = 300;
-var randomMaxX = 900;
-var randomMinY = 100;
-var randomMaxY = 500;
-var titles = [
+var MIN_PRICE = 1000;
+var MAX_PRICE = 1000000;
+var MIN_ROOMS = 1;
+var MAX_ROOMS = 5;
+var MIN_GUESTS = 1;
+var MAX_GUESTS = 10;
+var RANDOM_MIN_X = 300;
+var RANDOM_MAX_X = 900;
+var RANDOM_MIN_Y = 100;
+var RANDOM_MAX_Y = 500;
+var QUNTITY_CARD = 8;
+var TITLES = [
   'Большая уютная квартира',
   'Маленькая неуютная квартира',
   'Огромный прекрасный дворец',
@@ -20,13 +21,13 @@ var titles = [
   'Уютное бунгало далеко от моря',
   'Неуютное бунгало по колено в воде'
 ];
-var types = ['flat', 'house', 'bungalo'];
-var typesText = {'flat': 'Квартира', 'house': 'Дом', 'bungalo': 'Бунгало'};
-var checkins = ['12:00', '13:00', '14:00'];
-var checkouts = ['12:00', '13:00', '14:00'];
-var featuresList = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
+var TYPES = ['flat', 'house', 'bungalo'];
+var TYPES_TEXT = {'flat': 'Квартира', 'house': 'Дом', 'bungalo': 'Бунгало'};
+var CHECKINS = ['12:00', '13:00', '14:00'];
+var CHECKOUTS = ['12:00', '13:00', '14:00'];
+var FEATURES_LIST = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
 var getRandomArrayIndex = function (arr) {
-  Math.floor(Math.random() * arr.length);
+  return Math.floor(Math.random() * arr.length);
 };
 var randomValue = function (min, max) {
   return Math.floor(Math.random() * (max + 1 - min)) + min;
@@ -37,9 +38,9 @@ var getRandomArray = function (arr) {
 };
 var getData = function () {
   var advertismentData = [];
-  for (var i = 0; i < 8; i++) { // const and func
-    var titleIndex = getRandomArrayIndex(titles);
-    var locationIcon = {'x': randomValue(randomMinX, randomMaxX), 'y': randomValue(randomMinY, randomMaxY)};
+  for (var i = 0; i < QUNTITY_CARD; i++) { // const and func
+    var titleIndex = getRandomArrayIndex(TITLES);
+    var locationIcon = {'x': randomValue(RANDOM_MIN_X, RANDOM_MAX_X), 'y': randomValue(RANDOM_MIN_Y, RANDOM_MAX_Y)};
     var advertisment =
       {
         'author': {
@@ -47,29 +48,29 @@ var getData = function () {
         },
 
         'offer': {
-          'title': titles[titleIndex],
+          'title': TITLES[titleIndex],
           'address': locationIcon.x + ', ' + locationIcon.y,
-          'price': randomValue(minPrice, maxPrice),
-          'type': types[getRandomArrayIndex(types)],
-          'rooms': randomValue(minRooms, maxRooms),
-          'guests': randomValue(minGuests, maxGuests),
-          'checkin': checkins[getRandomArrayIndex(checkins)],
-          'checkout': checkouts[getRandomArrayIndex(checkouts)],
-          'features': getRandomArray(featuresList),
+          'price': randomValue(MIN_PRICE, MAX_PRICE),
+          'type': TYPES[getRandomArrayIndex(TYPES)],
+          'rooms': randomValue(MIN_ROOMS, MAX_ROOMS),
+          'guests': randomValue(MIN_GUESTS, MAX_GUESTS),
+          'checkin': CHECKINS[getRandomArrayIndex(CHECKINS)],
+          'checkout': CHECKOUTS[getRandomArrayIndex(CHECKOUTS)],
+          'features': getRandomArray(FEATURES_LIST),
           'description': '',
           'photos': []
         },
         'location': locationIcon
       };
-    titles.splice(titleIndex, 1);
+    TITLES.splice(titleIndex, 1);
     advertismentData.push(advertisment);
   }
   return advertismentData;
 };
 advertismentList = getData();
 var showMap = function () {
-  var mapNoFaded = document.querySelector('.map');
-  mapNoFaded.classList.remove('map--faded');
+  var mapElement = document.querySelector('.map');
+  mapElement.classList.remove('map--faded');
 };
 
 var getPin = function (data) {
@@ -83,7 +84,7 @@ var getPin = function (data) {
 
 var addButtons = function () {
   var fragment = document.createDocumentFragment();
-  for (var j = 0; j < 8; j++) { // const
+  for (var j = 0; j < QUNTITY_CARD; j++) { // const
     var buttonNode = getPin(advertismentList[j]);
     fragment.appendChild(buttonNode);
   }
@@ -115,8 +116,8 @@ var getCard = function (data) {
   var avatarCard = wholeCard.querySelector('.popup__avatar');
   titleCard.textContent = data.offer.title;
   addressCard.textContent = data.offer.address;
-  priceCard.textContent = data.offer.price + '&#x20bd;/ночь';
-  buildCard.textContent = typesText[data.offer.type];
+  priceCard.innerHTML = data.offer.price + '&#x20bd;/ночь';
+  buildCard.textContent = TYPES_TEXT[data.offer.type];
   roomAndGuestCard.textContent = data.offer.rooms + ' для ' + data.offer.guests + ' гостей';
   checkinAndCheckoutCard.textContent = 'Заезд после ' + data.offer.checkin + ', выезд до ' + data.offer.checkout;
   featuresCard.innerHTML = generateFeaturesList(data.offer.features);
