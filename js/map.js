@@ -72,23 +72,22 @@ var showMap = function () {
   var mapElement = document.querySelector('.map');
   mapElement.classList.remove('map--faded');
 };
-
+var buttonWhole = document.querySelector('template').content.querySelector('.map__pin');
 var getPin = function (data) {
-  var buttonWithImageNode = document.querySelector('template').content.querySelector('.map__pin').cloneNode(true);
+  var buttonWithImageNode = buttonWhole.cloneNode(true);
   var buttonImage = buttonWithImageNode.querySelector('img');
   buttonWithImageNode.style.left = data.location.x + 'px';
   buttonWithImageNode.style.top = data.location.y + 'px';
   buttonImage.src = data.author.avatar;
   return buttonWithImageNode;
 };
-
+var mapPins = document.querySelector('.map__pins');
 var addButtons = function () {
   var fragment = document.createDocumentFragment();
   for (var j = 0; j < QUNTITY_CARD; j++) { // const
     var buttonNode = getPin(advertismentList[j]);
     fragment.appendChild(buttonNode);
   }
-  var mapPins = document.querySelector('.map__pins');
   mapPins.appendChild(fragment);
 };
 
@@ -102,8 +101,8 @@ var generateFeaturesList = function (featuresArray) {
   }
   return featuresString;
 };
+var template = document.querySelector('template').content;
 var getCard = function (data) {
-  var template = document.querySelector('template').content;
   var wholeCard = template.querySelector('.map__card').cloneNode(true);
   var titleCard = wholeCard.querySelector('h3');
   var addressCard = wholeCard.querySelector('p small');
