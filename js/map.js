@@ -68,11 +68,12 @@ var getData = function () {
   return advertismentData;
 };
 advertismentList = getData();
+var mapElement = document.querySelector('.map');
 var showMap = function () {
-  var mapElement = document.querySelector('.map');
   mapElement.classList.remove('map--faded');
 };
-var buttonWhole = document.querySelector('template').content.querySelector('.map__pin');
+var template = document.querySelector('template').content;
+var buttonWhole = template.querySelector('.map__pin');
 var getPin = function (data) {
   var buttonWithImageNode = buttonWhole.cloneNode(true);
   var buttonImage = buttonWithImageNode.querySelector('img');
@@ -101,7 +102,6 @@ var generateFeaturesList = function (featuresArray) {
   }
   return featuresString;
 };
-var template = document.querySelector('template').content;
 var getCard = function (data) {
   var wholeCard = template.querySelector('.map__card').cloneNode(true);
   var titleCard = wholeCard.querySelector('h3');
@@ -124,9 +124,9 @@ var getCard = function (data) {
   avatarCard.src = data.author.avatar;
   return wholeCard;
 };
+var mapCard = document.querySelector('.map');
 var addCard = function (data) {
   var cardNode = getCard(data);
-  var mapCard = document.querySelector('.map');
   var beforeElement = document.querySelector('.map__filters-container');
   mapCard.insertBefore(cardNode, beforeElement);
 };
