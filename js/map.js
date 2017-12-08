@@ -123,11 +123,10 @@ var getCard = function (data) {
   avatarCard.src = data.author.avatar;
   return wholeCard;
 };
-var mapCard = document.querySelector('.map');
 var beforeElement = document.querySelector('.map__filters-container');
 var addCard = function (data) {
   var cardNode = getCard(data);
-  mapCard.insertBefore(cardNode, beforeElement);
+  mapElement.insertBefore(cardNode, beforeElement);
 };
 
 addCard(advertismentList[0]);
