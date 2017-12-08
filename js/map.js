@@ -91,10 +91,8 @@ var addButtons = function () {
   }
   mapPins.appendChild(fragment);
 };
-
 showMap();
 addButtons();
-
 var generateFeaturesList = function (featuresArray) {
   var featuresString = '';
   for (var j = 0; j < featuresArray.length; j++) {
@@ -102,8 +100,9 @@ var generateFeaturesList = function (featuresArray) {
   }
   return featuresString;
 };
+var templateCard = template.querySelector('.map__card');
 var getCard = function (data) {
-  var wholeCard = template.querySelector('.map__card').cloneNode(true);
+  var wholeCard = templateCard.cloneNode(true);
   var titleCard = wholeCard.querySelector('h3');
   var addressCard = wholeCard.querySelector('p small');
   var priceCard = wholeCard.querySelector('.popup__price');
@@ -125,9 +124,9 @@ var getCard = function (data) {
   return wholeCard;
 };
 var mapCard = document.querySelector('.map');
+var beforeElement = document.querySelector('.map__filters-container');
 var addCard = function (data) {
   var cardNode = getCard(data);
-  var beforeElement = document.querySelector('.map__filters-container');
   mapCard.insertBefore(cardNode, beforeElement);
 };
 
