@@ -126,7 +126,7 @@ var addCard = function (data) {
   var cardNode = getCard(data);
   mapElement.insertBefore(cardNode, beforeElement);
 };
-//addCard(advertismentList[0]);
+// addCard(advertismentList[0]);
 
 //
 //
