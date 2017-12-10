@@ -142,15 +142,20 @@ var activeFieldset = function () {
 var openForm = function () {
   form.classList.remove('notice__form--disabled');
 };
+var pinList = mapPins.querySelectorAll('.map__pin');
+var selectPin = function () {
+  for (var i = 0; i < pinList.length; i++) {
+    pinList[i].addEventListener('mouseup', function () {
+      pinList[i].classList.add('map__pin--active');
+    });
+    // addCard(advertismentList[0]);
+  }
+};
 var setup = document.querySelector('.map__pin--main');
 setup.addEventListener('mouseup', function () {
   addButtons();
   showMap();
   openForm();
   activeFieldset();
-});
-var anyPin = mapPins.querySelector('.map__pin');
-anyPin.addEventListener('mouseup', function () {
-  anyPin.classList.add('.map__pin--active');
-  addCard(advertismentList[4]);
+  selectPin();
 });
