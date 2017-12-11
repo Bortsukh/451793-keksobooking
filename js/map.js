@@ -125,11 +125,9 @@ var beforeElement = document.querySelector('.map__filters-container');
 var addCard = function (data) {
   var cardNode = getCard(data);
   mapElement.insertBefore(cardNode, beforeElement);
+  return cardNode;
 };
-// addCard(advertismentList[0]);
 
-//
-//
 //
 
 var form = document.querySelector('.notice__form');
@@ -142,20 +140,44 @@ var activeFieldset = function () {
 var openForm = function () {
   form.classList.remove('notice__form--disabled');
 };
-var pinList = mapPins.querySelectorAll('.map__pin');
-var selectPin = function () {
-  for (var i = 0; i < pinList.length; i++) {
-    pinList[i].addEventListener('mouseup', function () {
-      pinList[i].classList.add('map__pin--active');
-    });
-    // addCard(advertismentList[0]);
-  }
-};
+var setupIsFinished = false;
 var setup = document.querySelector('.map__pin--main');
 setup.addEventListener('mouseup', function () {
-  addButtons();
-  showMap();
-  openForm();
-  activeFieldset();
-  selectPin();
+  if (!setupIsFinished) {
+    addButtons();
+    showMap();
+    openForm();
+    activeFieldset();
+    selectPinEvent();
+    setupIsFinished = true;
+  }
 });
+var deleteTable = function () {
+  var popup = document.querySelector('.popup');
+  if (popup) {
+    popup.remove();
+  }
+};
+var showTable = function (n, pinList) {
+  pinList[n].addEventListener('mouseup', function () {
+    deleteActiveClass(pinList);
+    deleteTable();
+    this.classList.add('map__pin--active');
+    var popup = addCard(advertismentList[n - 1]);
+    popup.querySelector('.popup__close').addEventListener('mouseup', function () {
+      deleteTable();
+      deleteActiveClass(pinList);
+    });
+  });
+};
+var deleteActiveClass = function (pinList) {
+  pinList.forEach(function (el) {
+    el.classList.remove('map__pin--active');
+  });
+};
+var selectPinEvent = function () {
+  var pinList = mapPins.querySelectorAll('.map__pin');
+  for (var i = 1; i < pinList.length; i++) {
+    showTable(i, pinList);
+  }
+};
