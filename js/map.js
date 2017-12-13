@@ -11,6 +11,7 @@ var RANDOM_MAX_X = 900;
 var RANDOM_MIN_Y = 100;
 var RANDOM_MAX_Y = 500;
 var QUANTITY_CARD = 8;
+var ESCAPE = 27;
 var TITLES = [
   'Большая уютная квартира',
   'Маленькая неуютная квартира',
@@ -141,14 +142,14 @@ var openForm = function () {
   form.classList.remove('notice__form--disabled');
 };
 var setupIsFinished = false;
-var setup = document.querySelector('.map__pin--main');
-setup.addEventListener('mouseup', function () {
+var pinMain = document.querySelector('.map__pin--main');
+pinMain.addEventListener('mouseup', function () {
   if (!setupIsFinished) {
     addButtons();
     showMap();
     openForm();
     activeFieldset();
-    selectPinEvent();
+    addPinsListener();
     setupIsFinished = true;
   }
 });
@@ -174,7 +175,7 @@ var addPinListener = function (n, pinList) {
     document.addEventListener('keydown', closePopup);
   });
   var closePopup = function (evt) {
-    if (evt.keyCode === 27) {
+    if (evt.keyCode === ESCAPE) {
       removeClassAndPopup();
       document.removeEventListener('keydown', closePopup);
     }
@@ -186,7 +187,7 @@ var deleteActiveClass = function () {
     activePin.classList.remove('map__pin--active');
   }
 };
-var selectPinEvent = function () {
+var addPinsListener = function () {
   var pinList = mapPins.querySelectorAll('.map__pin:not(.map__pin--main)');
   for (var i = 0; i < pinList.length; i++) {
     addPinListener(i, pinList);
