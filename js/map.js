@@ -10,7 +10,7 @@ var RANDOM_MIN_X = 300;
 var RANDOM_MAX_X = 900;
 var RANDOM_MIN_Y = 100;
 var RANDOM_MAX_Y = 500;
-var QUNTITY_CARD = 8;
+var QUANTITY_CARD = 8;
 var TITLES = [
   'Большая уютная квартира',
   'Маленькая неуютная квартира',
@@ -38,7 +38,7 @@ var getRandomArray = function (arr) {
 };
 var getData = function () {
   var advertismentData = [];
-  for (var i = 0; i < QUNTITY_CARD; i++) {
+  for (var i = 0; i < QUANTITY_CARD; i++) {
     var titleIndex = getRandomArrayIndex(TITLES);
     var locationIcon = {'x': randomValue(RANDOM_MIN_X, RANDOM_MAX_X), 'y': randomValue(RANDOM_MIN_Y, RANDOM_MAX_Y)};
     var advertisment =
@@ -85,7 +85,7 @@ var getPin = function (data) {
 var mapPins = document.querySelector('.map__pins');
 var addButtons = function () {
   var fragment = document.createDocumentFragment();
-  for (var j = 0; j < QUNTITY_CARD; j++) {
+  for (var j = 0; j < QUANTITY_CARD; j++) {
     var buttonNode = getPin(advertismentList[j]);
     fragment.appendChild(buttonNode);
   }
@@ -152,32 +152,43 @@ setup.addEventListener('mouseup', function () {
     setupIsFinished = true;
   }
 });
-var deleteTable = function () {
+var removePopup = function () {
   var popup = document.querySelector('.popup');
   if (popup) {
     popup.remove();
   }
 };
-var showTable = function (n, pinList) {
-  pinList[n].addEventListener('mouseup', function () {
-    deleteActiveClass(pinList);
-    deleteTable();
-    this.classList.add('map__pin--active');
-    var popup = addCard(advertismentList[n - 1]);
-    popup.querySelector('.popup__close').addEventListener('mouseup', function () {
-      deleteTable();
-      deleteActiveClass(pinList);
-    });
-  });
+var removeClassAndPopup = function () {
+  removePopup();
+  deleteActiveClass();
 };
-var deleteActiveClass = function (pinList) {
-  pinList.forEach(function (el) {
-    el.classList.remove('map__pin--active');
+var addPinListener = function (n, pinList) {
+  pinList[n].addEventListener('click', function (evt) {
+    removeClassAndPopup();
+    evt.currentTarget.classList.add('map__pin--active');
+    var popup = addCard(advertismentList[n]);
+    popup.querySelector('.popup__close').addEventListener('click', function () {
+      removeClassAndPopup();
+      document.removeEventListener('keydown', closePopup);
+    });
+    document.addEventListener('keydown', closePopup);
   });
+  var closePopup = function (evt) {
+    if (evt.keyCode === 27) {
+      removeClassAndPopup();
+      document.removeEventListener('keydown', closePopup);
+    }
+  };
+};
+var deleteActiveClass = function () {
+  var activePin = mapPins.querySelector('.map__pin--active');
+  if (activePin) {
+    activePin.classList.remove('map__pin--active');
+  }
 };
 var selectPinEvent = function () {
-  var pinList = mapPins.querySelectorAll('.map__pin');
-  for (var i = 1; i < pinList.length; i++) {
-    showTable(i, pinList);
+  var pinList = mapPins.querySelectorAll('.map__pin:not(.map__pin--main)');
+  for (var i = 0; i < pinList.length; i++) {
+    addPinListener(i, pinList);
   }
 };
