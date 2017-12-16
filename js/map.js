@@ -231,19 +231,19 @@ var syncroniseInputs = function (select1, select2) {
   select2.value = select;
 };
 
-var syncronisePrice = function (param1, param2) {
-  switch (param1.value) {
+var syncronisePrice = function (typeOfBuilding, priceForDay) {
+  switch (typeOfBuilding.value) {
     case 'bungalo':
-      param2.min = BUNGALO_MIN_PRICE;
+      priceForDay.min = BUNGALO_MIN_PRICE;
       break;
     case 'flat':
-      param2.min = FLAT_MIN_PRICE;
+      priceForDay.min = FLAT_MIN_PRICE;
       break;
     case 'house':
-      param2.min = HOUSE_MIN_PRICE;
+      priceForDay.min = HOUSE_MIN_PRICE;
       break;
     case 'palace':
-      param2.min = PALACE_MIN_PRICE;
+      priceForDay.min = PALACE_MIN_PRICE;
       break;
   }
 };
@@ -328,7 +328,7 @@ inputPrice.addEventListener('input', function () {
 
 inputTitle.addEventListener('input', function (evt) {
   var target = evt.target;
-  if (target.value.length < 2) {
+  if (target.value.length < MIN_LENGTH) {
     target.setCustomValidity('Заголовок объявления должен состоять минимум из 30 символов');
   } else {
     target.setCustomValidity('');
