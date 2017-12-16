@@ -248,28 +248,28 @@ var syncronisePrice = function (typeOfBuilding, priceForDay) {
   }
 };
 
-var syncroniseRooms = function (rooms1, capacity1) {
-  for (var i = 0; i < capacity1.options.length; i++) {
-    capacity1.options[i].disabled = true;
+var syncroniseRooms = function (rooms, capacity) {
+  for (var i = 0; i < capacity.options.length; i++) {
+    capacity.options[i].disabled = true;
   }
-  switch (rooms1.value) {
+  switch (rooms.value) {
     case '1':
-      capacity1.options[2].disabled = false;
-      capacity1.value = 1;
+      capacity.options[2].disabled = false;
+      capacity.value = 1;
       break;
     case '2':
-      capacity1.options[1].disabled = false;
-      capacity1.options[2].disabled = false;
+      capacity.options[1].disabled = false;
+      capacity.options[2].disabled = false;
       break;
     case '3':
-      capacity1.options[0].disabled = false;
-      capacity1.options[1].disabled = false;
-      capacity1.options[2].disabled = false;
-      capacity1.value = 3;
+      capacity.options[0].disabled = false;
+      capacity.options[1].disabled = false;
+      capacity.options[2].disabled = false;
+      capacity.value = 3;
       break;
     case '100':
-      capacity1.options[3].disabled = false;
-      capacity1.value = 0;
+      capacity.options[3].disabled = false;
+      capacity.value = 0;
       break;
   }
 };
