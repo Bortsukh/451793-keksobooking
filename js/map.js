@@ -12,6 +12,16 @@ var RANDOM_MIN_Y = 100;
 var RANDOM_MAX_Y = 500;
 var QUANTITY_CARD = 8;
 var ESCAPE = 27;
+var MIN_LENGTH = 30;
+var MAX_LENGTH = 100;
+var MIN_PRICE_INPUT = 0;
+var MAX_PRICE_INPUT = 1000000;
+var VALUE_PRICE_INPUT = 1000;
+var BUNGALO_MIN_PRICE = 0;
+var FLAT_MIN_PRICE = 1000;
+var HOUSE_MIN_PRICE = 5000;
+var PALACE_MIN_PRICE = 10000;
+
 var TITLES = [
   'Большая уютная квартира',
   'Маленькая неуютная квартира',
@@ -209,12 +219,12 @@ inputAddress.required = true;
 inputAddress.value = 'SP';
 inputAddress.setAttribute('readonly', 'readonly');
 inputTitle.required = true;
-inputTitle.setAttribute('minlength', '30');
-inputTitle.setAttribute('maxlength', '100');
+inputTitle.setAttribute('minlength', MIN_LENGTH);
+inputTitle.setAttribute('maxlength', MAX_LENGTH);
 inputPrice.required = true;
-inputPrice.min = 0;
-inputPrice.max = 1000000;
-inputPrice.value = 1000;
+inputPrice.min = MIN_PRICE_INPUT;
+inputPrice.max = MAX_PRICE_INPUT;
+inputPrice.value = VALUE_PRICE_INPUT;
 
 var syncroniseInputs = function (select1, select2) {
   var select = select1.value;
@@ -224,16 +234,16 @@ var syncroniseInputs = function (select1, select2) {
 var syncronisePrice = function (param1, param2) {
   switch (param1.value) {
     case 'bungalo':
-      param2.min = 0;
+      param2.min = BUNGALO_MIN_PRICE;
       break;
     case 'flat':
-      param2.min = 1000;
+      param2.min = FLAT_MIN_PRICE;
       break;
     case 'house':
-      param2.min = 5000;
+      param2.min = HOUSE_MIN_PRICE;
       break;
     case 'palace':
-      param2.min = 10000;
+      param2.min = PALACE_MIN_PRICE;
       break;
   }
 };
