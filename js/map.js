@@ -32,7 +32,7 @@ var addPinListener = function (n, pinList) {
   pinList[n].addEventListener('click', function (evt) {
     removeClassAndPopup();
     evt.currentTarget.classList.add('map__pin--active');
-    var popup = window.addCard(window.advertismentList[n]);
+    var popup = window.card.add(window.advertismentList[n]);
     popup.querySelector('.popup__close').addEventListener('click', function () {
       removeClassAndPopup();
       document.removeEventListener('keydown', closePopup);
@@ -62,7 +62,7 @@ var setupIsFinished = false;
 var pinMain = document.querySelector('.map__pin--main');
 pinMain.addEventListener('mouseup', function () {
   if (!setupIsFinished) {
-    window.addButtons();
+    window.pin.add();
     showMap();
     openForm();
     activeFieldset();
