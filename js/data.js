@@ -11,7 +11,7 @@
   var RANDOM_MAX_X = 900;
   var RANDOM_MIN_Y = 100;
   var RANDOM_MAX_Y = 500;
-  window.QUANTITY_CARD = 8;
+  var QUANTITY_CARD = 8;
   var TITLES = [
     'Большая уютная квартира',
     'Маленькая неуютная квартира',
@@ -39,7 +39,7 @@
     return arr.slice(0, quantityElements);
   };
   var advertismentData = [];
-  for (var i = 0; i < window.QUANTITY_CARD; i++) {
+  for (var i = 0; i < QUANTITY_CARD; i++) {
     var titleIndex = getRandomArrayIndex(TITLES);
     var locationIcon = {'x': randomValue(RANDOM_MIN_X, RANDOM_MAX_X), 'y': randomValue(RANDOM_MIN_Y, RANDOM_MAX_Y)};
     var advertisment =

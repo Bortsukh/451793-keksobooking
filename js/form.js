@@ -18,7 +18,7 @@
   var inputTimeout = document.querySelector('#timeout');
   var inputRooms = document.querySelector('#room_number');
   var inputCapacity = document.querySelector('#capacity');
-  var form = window.form;
+  var form = document.querySelector('.notice__form');
   form.setAttribute('action', 'https://js.dump.academy/keksobooking');
   form.setAttribute('type', 'multipart/form-data');
   form.setAttribute('method', 'post');
@@ -32,6 +32,17 @@
   inputPrice.min = MIN_PRICE_INPUT;
   inputPrice.max = MAX_PRICE_INPUT;
   inputPrice.value = VALUE_PRICE_INPUT;
+
+  var listFieldset = form.querySelectorAll('fieldset');
+  var activateFieldset = function () {
+    for (var i = 0; i < listFieldset.length; i++) {
+      listFieldset[i].disabled = false;
+    }
+  };
+
+  var openForm = function () {
+    form.classList.remove('notice__form--disabled');
+  };
 
   var syncroniseInputs = function (select1, select2) {
     var select = select1.value;
@@ -141,4 +152,8 @@
       target.setCustomValidity('');
     }
   });
+  window.form = {
+    activate: activateFieldset,
+    open: openForm
+  };
 })();
