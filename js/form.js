@@ -23,7 +23,7 @@
   form.setAttribute('type', 'multipart/form-data');
   form.setAttribute('method', 'post');
   inputAddress.required = true;
-  inputAddress.value = 'sp';
+  inputAddress.value = '';
   inputAddress.setAttribute('readonly', 'readonly');
   inputTitle.required = true;
   inputTitle.setAttribute('minlength', MIN_LENGTH);
@@ -152,8 +152,14 @@
       target.setCustomValidity('');
     }
   });
+
+  var setAddressValue = function (locationX, locationY) {
+    inputAddress.value = 'x: ' + locationX + ', y: ' + locationY;
+  };
+
   window.form = {
     activate: activateFieldset,
-    open: openForm
+    open: openForm,
+    setAddressValue: setAddressValue
   };
 })();

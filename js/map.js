@@ -48,11 +48,8 @@
       addPinListener(i, pinList);
     }
   };
-  var setupIsFinished = false;
 
-  //
-  //
-  //
+  var setupIsFinished = false;
   var pinMain = document.querySelector('.map__pin--main');
   pinMain.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
@@ -74,8 +71,11 @@
         x: moveEvt.clientX,
         y: moveEvt.clientY
       };
-      pinMain.style.top = (pinMain.offsetTop - shift.y) + 'px';
-      pinMain.style.left = (pinMain.offsetLeft - shift.x) + 'px';
+      var pinMainLocationY = pinMain.offsetTop - shift.y;
+      var pinMainLocationX = pinMain.offsetLeft - shift.x;
+      pinMain.style.top = pinMainLocationY + 'px';
+      pinMain.style.left = pinMainLocationX + 'px';
+      window.form.setAddressValue(pinMainLocationX, pinMainLocationY);
     };
 
     var onMouseUp = function (upEvt) {
@@ -97,21 +97,9 @@
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
   });
-
-  // var pinMain = document.querySelector('.map__pin--main');
-  // pinMain.addEventListener('mouseup', function () {
-  //   if (!setupIsFinished) {
-  //     window.pin.add();
-  //     showMap();
-  //     window.form.open();
-  //     window.form.activate();
-  //     addPinsListener();
-  //     setupIsFinished = true;
-  //   }
-  // });
   window.map = {
     template: template,
     mapPins: mapPins,
-    mapElement: mapElement,
+    mapElement: mapElement
   };
 })();
