@@ -23,7 +23,7 @@
   form.setAttribute('type', 'multipart/form-data');
   form.setAttribute('method', 'post');
   inputAddress.required = true;
-  inputAddress.value = 'SP';
+  inputAddress.value = 'sp';
   inputAddress.setAttribute('readonly', 'readonly');
   inputTitle.required = true;
   inputTitle.setAttribute('minlength', MIN_LENGTH);
