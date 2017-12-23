@@ -10,6 +10,7 @@
   var FLAT_MIN_PRICE = 1000;
   var HOUSE_MIN_PRICE = 5000;
   var PALACE_MIN_PRICE = 10000;
+  var PIN_HEIGHT = 32;
   var inputAddress = document.querySelector('#address');
   var inputTitle = document.querySelector('#title');
   var inputPrice = document.querySelector('#price');
@@ -23,7 +24,7 @@
   form.setAttribute('type', 'multipart/form-data');
   form.setAttribute('method', 'post');
   inputAddress.required = true;
-  inputAddress.value = 'SP';
+  inputAddress.value = '';
   inputAddress.setAttribute('readonly', 'readonly');
   inputTitle.required = true;
   inputTitle.setAttribute('minlength', MIN_LENGTH);
@@ -152,8 +153,14 @@
       target.setCustomValidity('');
     }
   });
+
+  var setAddressValue = function (locationX, locationY) {
+    inputAddress.value = 'x: ' + locationX + ', y: ' + (locationY + PIN_HEIGHT);
+  };
+
   window.form = {
     activate: activateFieldset,
-    open: openForm
+    open: openForm,
+    setAddressValue: setAddressValue
   };
 })();
