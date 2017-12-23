@@ -10,6 +10,7 @@
   var FLAT_MIN_PRICE = 1000;
   var HOUSE_MIN_PRICE = 5000;
   var PALACE_MIN_PRICE = 10000;
+  var PIN_HEIGHT = 32;
   var inputAddress = document.querySelector('#address');
   var inputTitle = document.querySelector('#title');
   var inputPrice = document.querySelector('#price');
@@ -154,7 +155,7 @@
   });
 
   var setAddressValue = function (locationX, locationY) {
-    inputAddress.value = 'x: ' + locationX + ', y: ' + (locationY + 32);
+    inputAddress.value = 'x: ' + locationX + ', y: ' + (locationY + PIN_HEIGHT);
   };
 
   window.form = {
