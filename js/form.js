@@ -154,7 +154,7 @@
   });
 
   var setAddressValue = function (locationX, locationY) {
-    inputAddress.value = 'x: ' + locationX + ', y: ' + locationY;
+    inputAddress.value = 'x: ' + locationX + ', y: ' + (locationY + 32);
   };
 
   window.form = {

@@ -1,6 +1,8 @@
 'use strict';
 (function () {
   var ESCAPE = 27;
+  var RESTRICTION_MIN_Y = 100;
+  var RESTRICTION_MAX_Y = 500;
   var template = document.querySelector('template').content;
   var mapPins = document.querySelector('.map__pins');
   var mapElement = document.querySelector('.map');
@@ -73,20 +75,15 @@
       };
       var pinMainLocationY = pinMain.offsetTop - shift.y;
       var pinMainLocationX = pinMain.offsetLeft - shift.x;
-      if (pinMainLocationY < 100) {
-        pinMainLocationY = 100;
-      } else if (pinMainLocationY > 500) {
-        pinMainLocationY = 500;
+      if (pinMainLocationY < RESTRICTION_MIN_Y) {
+        pinMainLocationY = RESTRICTION_MIN_Y;
+      } else if (pinMainLocationY > RESTRICTION_MAX_Y) {
+        pinMainLocationY = RESTRICTION_MAX_Y;
       } else {
         pinMain.style.top = pinMainLocationY + 'px';
       }
-      if (pinMainLocationX < 300) {
-        pinMainLocationX = 300;
-      } else if (pinMainLocationX > 900) {
-        pinMainLocationX = 900;
-      } else {
-        pinMain.style.left = pinMainLocationX + 'px';
-      }
+      pinMain.style.left = pinMainLocationX + 'px';
+
       window.form.setAddressValue(pinMainLocationX, pinMainLocationY);
     };
 
