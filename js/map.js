@@ -73,8 +73,20 @@
       };
       var pinMainLocationY = pinMain.offsetTop - shift.y;
       var pinMainLocationX = pinMain.offsetLeft - shift.x;
-      pinMain.style.top = pinMainLocationY + 'px';
-      pinMain.style.left = pinMainLocationX + 'px';
+      if (pinMainLocationY < 100) {
+        pinMainLocationY = 100;
+      } else if (pinMainLocationY > 500) {
+        pinMainLocationY = 500;
+      } else {
+        pinMain.style.top = pinMainLocationY + 'px';
+      }
+      if (pinMainLocationX < 300) {
+        pinMainLocationX = 300;
+      } else if (pinMainLocationX > 900) {
+        pinMainLocationX = 900;
+      } else {
+        pinMain.style.left = pinMainLocationX + 'px';
+      }
       window.form.setAddressValue(pinMainLocationX, pinMainLocationY);
     };
 
