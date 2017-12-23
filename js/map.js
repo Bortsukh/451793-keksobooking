@@ -1,8 +1,8 @@
 'use strict';
 (function () {
   var ESCAPE = 27;
-  var RESTRICTION_MIN_Y = 100;
-  var RESTRICTION_MAX_Y = 500;
+  var RESTRICTION_MIN_Y = 68;
+  var RESTRICTION_MAX_Y = 468;
   var template = document.querySelector('template').content;
   var mapPins = document.querySelector('.map__pins');
   var mapElement = document.querySelector('.map');
