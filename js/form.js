@@ -21,7 +21,6 @@
   var inputCapacity = document.querySelector('#capacity');
   var form = document.querySelector('.notice__form');
   var formData = new FormData(form);
-  console.log(formData);
   form.setAttribute('action', 'https://js.dump.academy/keksobooking');
   form.setAttribute('type', 'multipart/form-data');
   form.setAttribute('method', 'post');

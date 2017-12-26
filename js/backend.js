@@ -50,7 +50,12 @@
     xhr.responseType = 'json';
 
     xhr.addEventListener('load', function () {
-      onSuccess(xhr.response);
+      if (xhr.status === 200) {
+        onSuccess(xhr.response);
+      }
+      if (xhr.status !== 200) {
+        onError('Неизвестный статус: ' + xhr.status + ' ' + xhr.statusText);
+      }
     });
 
     xhr.open('POST', url);
@@ -61,7 +66,10 @@
 (function () {
   var urlForm = 'https://js.dump.academy/keksobooking';
   var onSuccess = function () {
-
+    ????reset()
   };
-  window.upload(urlForm, data, onSuccess);
+  var onError = function (message) {
+    console.error(message);
+  };;
+  window.upload(urlForm, window.form.formData, onSuccess);
 })();
