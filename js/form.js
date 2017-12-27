@@ -20,7 +20,6 @@
   var inputRooms = document.querySelector('#room_number');
   var inputCapacity = document.querySelector('#capacity');
   var form = document.querySelector('.notice__form');
-  var formData = new FormData(form);
   form.setAttribute('action', 'https://js.dump.academy/keksobooking');
   form.setAttribute('type', 'multipart/form-data');
   form.setAttribute('method', 'post');
@@ -159,10 +158,40 @@
     inputAddress.value = 'x: ' + locationX + ', y: ' + (locationY + PIN_HEIGHT);
   };
 
+  (function () {
+    window.upload = function (url, data, onSuccess) {
+      var formData = new FormData(form);
+      var xhr = new XMLHttpRequest();
+      xhr.responseType = 'json';
+
+      xhr.addEventListener('load', function () {
+        if (xhr.status === 200) {
+          onSuccess(xhr.response);
+        }
+        if (xhr.status !== 200) {
+          onError('Неизвестный статус: ' + xhr.status + ' ' + xhr.statusText);
+        }
+      });
+
+      xhr.open('POST', url);
+      xhr.send(formData);
+    };
+  })();
+
+  (function () {
+    var urlForm = 'https://js.dump.academy/keksobooking';
+    var onSuccess = function () {
+      ????reset()
+    };
+    var onError = function (message) {
+      console.error(message);
+    };;
+    window.upload(urlForm, window.form.formData, onSuccess);
+  })();
+
   window.form = {
     activate: activateFieldset,
     open: openForm,
-    setAddressValue: setAddressValue,
-    formData: formData
+    setAddressValue: setAddressValue
   };
 })();

@@ -79,9 +79,10 @@
         pinMainLocationY = RESTRICTION_MIN_Y;
       } else if (pinMainLocationY > RESTRICTION_MAX_Y) {
         pinMainLocationY = RESTRICTION_MAX_Y;
-      } else {
-        pinMain.style.top = pinMainLocationY + 'px';
       }
+      // else {
+        pinMain.style.top = pinMainLocationY + 'px';
+      // }
       pinMain.style.left = pinMainLocationX + 'px';
 
       window.form.setAddressValue(pinMainLocationX, pinMainLocationY);
@@ -89,16 +90,16 @@
 
     var onMouseUp = function (upEvt) {
       upEvt.preventDefault();
-      window.addEventListener('mouseup', function () {
-        if (!setupIsFinished) {
-          window.pin.add();
-          showMap();
-          window.form.open();
-          window.form.activate();
-          addPinsListener();
-          setupIsFinished = true;
-        }
-      });
+      // window.addEventListener('mouseup', function () {
+      if (!setupIsFinished) {
+        window.pin.add();
+        showMap();
+        window.form.open();
+        window.form.activate();
+        addPinsListener();
+        setupIsFinished = true;
+      }
+      // });
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
     };
