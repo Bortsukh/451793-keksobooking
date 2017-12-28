@@ -158,36 +158,19 @@
     inputAddress.value = 'x: ' + locationX + ', y: ' + (locationY + PIN_HEIGHT);
   };
 
-  (function () {
-    window.upload = function (url, data, onSuccess) {
-      var formData = new FormData(form);
-      var xhr = new XMLHttpRequest();
-      xhr.responseType = 'json';
+  var onError = function (message) {
+    window.errorhandler.showError(message);
+  };
 
-      xhr.addEventListener('load', function () {
-        if (xhr.status === 200) {
-          onSuccess(xhr.response);
-        }
-        if (xhr.status !== 200) {
-          onError('Неизвестный статус: ' + xhr.status + ' ' + xhr.statusText);
-        }
-      });
+  var onSuccess = function () {
+    form.reset();
+  };
 
-      xhr.open('POST', url);
-      xhr.send(formData);
-    };
-  })();
-
-  (function () {
-    var urlForm = 'https://js.dump.academy/keksobooking';
-    var onSuccess = function () {
-      ????reset()
-    };
-    var onError = function (message) {
-      console.error(message);
-    };;
-    window.upload(urlForm, window.form.formData, onSuccess);
-  })();
+  window.backend.get(onSuccess, onError);
+  form.addEventListener('submit', function (evt) {
+    evt.preventDefault();
+    window.backend.post(new FormData(form), onSuccess, onError);
+  });
 
   window.form = {
     activate: activateFieldset,
