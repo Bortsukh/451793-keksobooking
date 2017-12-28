@@ -89,16 +89,13 @@
 
     var onMouseUp = function (upEvt) {
       upEvt.preventDefault();
-      window.addEventListener('mouseup', function () {
-        if (!setupIsFinished) {
-          window.pin.add();
-          showMap();
-          window.form.open();
-          window.form.activate();
-          addPinsListener();
-          setupIsFinished = true;
-        }
-      });
+      if (!setupIsFinished) {
+        showMap();
+        window.form.open();
+        window.form.activate();
+        window.backend.get(onSuccess, onError);
+        setupIsFinished = true;
+      }
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
     };
@@ -106,6 +103,19 @@
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
   });
+
+  var onError = function (message) {
+    window.errorhandler.showError(message);
+  };
+
+  var onSuccess = function (data) {
+    window.advertismentList = data;
+    window.pin.add();
+    addPinsListener();
+  };
+
+  // window.backend.get(onSuccess, onError);
+
   window.map = {
     template: template,
     mapPins: mapPins,

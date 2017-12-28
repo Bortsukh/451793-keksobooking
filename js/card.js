@@ -38,9 +38,6 @@
     return cardNode;
   };
   window.card = {
-    // get: function (data) {
-    //   return getCard(data);
-    // },
     add: function (data) {
       return addCard(data);
     }
