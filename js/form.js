@@ -24,7 +24,7 @@
   form.setAttribute('type', 'multipart/form-data');
   form.setAttribute('method', 'post');
   inputAddress.required = true;
-  inputAddress.value = '';
+  inputAddress.value = 'SP';
   inputAddress.setAttribute('readonly', 'readonly');
   inputTitle.required = true;
   inputTitle.setAttribute('minlength', MIN_LENGTH);
@@ -166,7 +166,6 @@
     form.reset();
   };
 
-  window.backend.get(onSuccess, onError);
   form.addEventListener('submit', function (evt) {
     evt.preventDefault();
     window.backend.post(new FormData(form), onSuccess, onError);
