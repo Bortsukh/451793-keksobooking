@@ -1,6 +1,7 @@
 'use strict';
 (function () {
   var SERVER_URL = 'https://js.dump.academy/keksobooking';
+  var TIME_OUT = 15000;
   var setup = function (onSuccess, onError) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
@@ -19,7 +20,7 @@
       onError('Запрос не успел выполниться за ' + xhr.timeout + 'мс');
     });
 
-    xhr.timeout = 10000; // 10s
+    xhr.timeout = TIME_OUT;
 
     return xhr;
   };

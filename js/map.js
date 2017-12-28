@@ -91,11 +91,11 @@
       upEvt.preventDefault();
       window.addEventListener('mouseup', function () {
         if (!setupIsFinished) {
-          window.pin.add(); // window.backend.load(window.pin.add, window.showError)
           showMap();
           window.form.open();
           window.form.activate();
           addPinsListener();
+          window.pin.add(); // window.backend.load(window.pin.add, window.showError)
           setupIsFinished = true;
         }
       });
